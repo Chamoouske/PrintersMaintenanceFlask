@@ -21,3 +21,19 @@ a {
 h2 {
     margin: 0;
 }
+
+.create-printer, .maintenance {
+    display: flex;
+    flex-direction: column;
+}
+
+.create-printer > label, .maintenance > label {
+    display: flex;
+    justify-content: space-between;
+    margin: 0.5rem;
+}
+
+.form > button {
+    width: 30%;
+    align-self: center;
+}

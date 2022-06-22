@@ -6,4 +6,37 @@
 
 {% block content %}
     <h4>Nova Impressora</h4>
+    <form method="post" action="{{ url_for('new_printer') }}" class="form create-printer">
+        <label for="mac">
+            MAC:
+            <input type="text" name="mac" required>
+        </label>
+
+        <label for="model">
+            Modelo:
+            <input type="text" name="model" required>
+        </label>
+        
+        <label for="purchased_date">
+            Data da compra:
+            <input type="date" name="purchased_date">
+        </label>
+
+        <label for="sector">
+            Setor:
+            <input type="text" name="sector">
+        </label>
+
+        <div class="maintenance">
+            <label for="date_maintenance">
+                Data da manutenção:
+                <input type="date" name="date_maintenance">
+            </label>
+            <label for="reason_maintenance">
+                Motivo da manutenção:
+                <input type="text" name="reason_maintenance">
+            </label>
+        </div>
+        <button type="submit">Salvar</button>
+    </form>
 {% endblock %}

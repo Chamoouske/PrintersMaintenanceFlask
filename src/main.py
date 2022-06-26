@@ -2,10 +2,9 @@ import sys
 from pathlib import Path
 
 from flask import Flask, request, redirect
+
 from controller.data_manager import create_tables_db, verify_tables
-from views.home import homepage
-from views.about import page_about
-from views.create import create_printer
+from views.pages import *
 
 file = Path(__file__).resolve()
 sys.path.append('.')

@@ -13,11 +13,18 @@
             border-radius: 0.6rem;
             padding: 0.2rem;
         }
+        
+        .table_ok {
+            background-color: {% if table_ok %} #0f0 {% else %} #f00 {% endif %};
+            border-radius: 50%;
+            width: 1rem;
+            height: 1rem;
+        }
     </style>
 </head>
 <body>
     <header class="container header">
-        <h2>Control Printers Maintenance</h2>
+        <h2>Control Printers Maintenance <a href="/create_tables"><img class="table_ok"></a></h2>
         <div class="menu-bar">
             <a href="/" class="home">Início</a>
             <a href="/cadastro" class="new_printer">Nova Impressora</a>
@@ -25,6 +32,12 @@
         </div>
     </header>
     <div class="container">
+        {% if not table_ok %}
+        <div class="msgs">
+            <span>Tabelas usadas não estão criadas</span>
+            <span>Clique no cículo vermelho ao lado do Título, para criar as tabelas automaticamente</span>
+        </div>
+        {% endif %}
         {% block content %}
         {% endblock %}
     </div>

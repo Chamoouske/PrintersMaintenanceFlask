@@ -8,6 +8,6 @@ printers = {
         'maintenances': [0, 5, 6]
     }
 
-def homepage():
+def homepage(table_ok):
     length = len(printers['identify'])
-    return render_template('home.html', selected='home', printers=printers, length=length)
+    return render_template('home.html', table_ok=table_ok, selected='home', printers=printers, length=length)

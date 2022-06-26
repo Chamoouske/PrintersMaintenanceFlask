@@ -1,11 +1,23 @@
 body {
     background-color: rgb(223, 223, 223);
 }
-.container {
+
+.container, .msgs {
     display: flex;
     align-items: center;
     justify-content: center;
     flex-direction: column;
+}
+
+.msgs {
+    margin-top: 0.5rem;
+    padding: 0.3rem;
+    border: 0.1rem solid rgb(177, 0, 0);
+    border-radius: 0.5rem;
+}
+
+.container > .msgs > span {
+    font-size: 0.7rem;
 }
 
 .menu-bar{

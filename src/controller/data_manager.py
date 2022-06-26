@@ -1,13 +1,16 @@
 import sqlalchemy
 import pandas
 
-
-def create_engine() -> sqlalchemy.engine_from_config:
+engine = None
+def create_engine() -> None:
+    global engine
     engine = sqlalchemy.create_engine('sqlite:///src\\static\\db\\database.db')
-    return engine
+    pass
 
 def create_tables_db() -> bool:
-    engine = create_engine()
+    global engine
+    if engine == None:
+        create_engine()
     try:
         engine.execute("""
                    CREATE TABLE IF NOT EXISTS printers (
@@ -16,7 +19,8 @@ def create_tables_db() -> bool:
                        sector TEXT,
                        date_purchased TEXT
                    )
-                   
+                   """)
+        engine.execute("""
                    CREATE TABLE IF NOT EXISTS maintenances (
                        printer TEXT,
                        date_maintenance TEXT NOT NULL,
@@ -29,7 +33,9 @@ def create_tables_db() -> bool:
 
 
 def verify_tables() -> bool:
-    engine = create_engine()
+    global engine
+    if engine == None:
+        create_engine()
     try:
         engine.execute("""
                        SELECT * FROM printers

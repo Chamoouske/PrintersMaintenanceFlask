@@ -5,7 +5,13 @@
 {% endblock %}
 
 {% block content %}
-    <h4>Nova Impressora</h4>
+    <h3>Nova Impressora</h3>
+    {% if error %}
+        <div class="msg error">Erro ao Salvar</div>
+    {% endif %}
+    {% if saved %}
+        <div class="msg success">Sucesso ao Salvar</div>
+    {% endif %}
     <form method="post" action="{{ url_for('new_printer') }}" class="form create-printer">
         <label for="mac">
             MAC:

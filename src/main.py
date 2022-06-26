@@ -12,8 +12,8 @@ parent, root = file.parent, file.parents[1]
 sys.path.append(str(root))
 
 app = Flask(__name__,
-        static_url_path='/views/static',
-        static_folder='views/static',
+        static_url_path='/static',
+        static_folder='static',
         template_folder='views/templates'
     )
 

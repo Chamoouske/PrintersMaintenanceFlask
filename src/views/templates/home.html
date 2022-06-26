@@ -1,9 +1,45 @@
 {% extends 'layout.html' %}
 
 {% block title %}
-    Home
+Home
 {% endblock %}
 
 {% block content %}
-    <h4>Teste de controle de alguma coisa</h4>
+<h3>Impressoras salvas</h3>
+<table class="table">
+    <tr>
+        <th>
+            Identificador
+        </th>
+        <th>
+            Modelo
+        </th>
+        <th>
+            Setor
+        </th>
+        <th>
+            Data de compra
+        </th>
+        <th>Qtd Manutenções</th>
+    </tr>
+    {% for i in range(length) %}
+    <tr>
+        <td>
+            {{ printers['identify'][i] }}
+        </td>
+        <td>
+            {{ printers['model'][i] }}
+        </td>
+        <td>
+            {{ printers['sector'][i] }}
+        </td>
+        <td>
+            {{ printers['date_purchased'][i] }}
+        </td>
+        <td>
+            {{ printers['maintenances'][i] }}
+        </td>
+    </tr>
+    {% endfor %}
+</table>
 {% endblock %}

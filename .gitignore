@@ -165,3 +165,6 @@ vscode/
 
 # PyCharm
 .idea/
+
+# Database
+*.db

@@ -1,0 +1,22 @@
+{% extends 'layout.html' %}
+
+{% block title %}
+Atualizar Manutenção
+{% endblock %}
+
+{% block content %}
+<h3>Adicionar Manutenção da impressora {{maintenance[0]}}</h3>
+<form action="/update_maint" class="form add-maint-form" method="post">
+    <input hidden value="{{maintenance[0]}}" name="identify">
+    <input hidden value="{{maintenance}}" name="last_maint">
+    <div>
+        <label>Data:
+            <input type="date" name="date_maint" value="{{maintenance[1]}}">
+        </label>
+        <label>Motivo:
+            <input type="text" name="reason_maint" value="{{maintenance[2]}}">
+        </label>
+    </div>
+    <button>Adicionar</button>
+</form>
+{% endblock %}

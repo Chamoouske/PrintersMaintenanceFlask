@@ -101,6 +101,24 @@ def delete_maint(maint):
         return redirect(f'/{maint[0]}')
     return redirect('/')
 
+@app.route('/edit_maint/<maint>')
+def edite_maint(maint):
+    global table_exist
+    table_exist = create_tables_db()
+    maint = maint.replace("\'", "").replace('(', '').replace(')', '').replace(' ', '').split(',')
+    return edit_maintenance(maint, table_ok=table_exist)
+
+@app.route('/update_maint', methods=['POST'])
+def update_maintenance():
+    identify = request.form['identify']
+    date_maint = request.form['date_maint']
+    reason_maint = request.form['reason_maint']
+    maint = request.form['last_maint']
+    maint = maint.replace("\'", "").replace('[', '').replace(']', '').replace(' ', '').split(',')
+    if reason_maint != '':
+        update_maintenances([identify, date_maint, reason_maint], maint)
+    return redirect(f'/{identify}')
+
 @app.route('/not_exist')
 def printer_not_exist():
     global table_exist

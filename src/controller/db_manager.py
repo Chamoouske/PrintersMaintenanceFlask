@@ -91,6 +91,26 @@ def delete_maintenance(maintenance):
     except:
         return False
     
+    
+def update_maintenances(maintenance, identify):
+    global engine
+    if engine == None:
+        create_engine()
+    try:
+        global maintenances
+        s = maintenances.update().where(
+                maintenances.c.printer==identify[0]).where(
+                    maintenances.c.date_maintenance==identify[1]).where(
+                        maintenances.c.reason==identify[2]).values(
+                                                printer=maintenance[0],
+                                                date_maintenance=maintenance[1],
+                                                reason=maintenance[2])
+        with engine.connect() as conn:
+            conn.execute(s)
+        return True
+    except:
+        return False
+    
 
 def update_count_maint(identify, operation='add'):
     global engine

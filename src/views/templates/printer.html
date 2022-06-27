@@ -4,7 +4,7 @@ Impressora {{ printer[0] }}
 {% endblock %}
 
 {% block content %}
-<h3>Impressora {{printer[0]}}</h3>
+<h3>Impressora {{printer[0]}} <span class="material-icons">create</span></h3>
 <table class="table">
     <thead>Informações</thead>
     <tr>
@@ -63,7 +63,8 @@ Impressora {{ printer[0] }}
             {{ row[2] }}
         </td>
         <td>
-            <a href="/delete_maint/{{row}}">X</a>
+            <a href="/delete_maint/{{row}}"><span class="material-icons">delete</span></a>
+            <a href="/edit_maint/{{row}}"><span class="material-icons">create</span></a>
         </td>
     </tr>
     {% endfor %}

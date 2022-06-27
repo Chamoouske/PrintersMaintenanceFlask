@@ -13,5 +13,8 @@ def page_about(table_ok=False):
 def show_printer_info(printer, maintenances, table_ok=False):
     return render_template('printer.html', table_ok=table_ok, printer=printer, maintenances=maintenances)
 
+def edit_maintenance(maintenance, table_ok=False):
+    return render_template('edit_maint.html', maintenance=maintenance, table_ok=table_ok)
+
 def page_not_exist(table_ok=False):
     return render_template('not_exist.html', table_ok=table_ok)

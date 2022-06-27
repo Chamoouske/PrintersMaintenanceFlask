@@ -85,7 +85,7 @@ def details_printer(identify):
     maintenances = get_maintenances(identify)
     return show_printer_info(printer=printer, maintenances=maintenances, table_ok=table_exist)
 
-@app.route('/edit_printer', methods=['POST'])
+@app.route('/new_maint', methods=['POST'])
 def add_maintenances_printer():
     identify = request.form['identify']
     date_maint = request.form['date_maint']
@@ -118,6 +118,40 @@ def update_maintenance():
     if reason_maint != '':
         update_maintenances([identify, date_maint, reason_maint], maint)
     return redirect(f'/{identify}')
+
+@app.route('/edit_printer', methods=['GET'])
+def edit_printer():
+    global table_exist
+    table_exist = create_tables_db()
+    identify = request.args["identify"]
+    model = request.args["model"]
+    sector = request.args["sector"]
+    date_purchased = request.args["date_purchased"]
+    return edit_printer_page([identify, model, sector, date_purchased], table_ok=table_exist)
+
+@app.route('/update_printer', methods=['POST'])
+def update_printer_page():
+    identify = request.form['identify']
+    model = request.form['model']
+    sector = request.form['sector']
+    date_purchased = request.form['date_purchased']
+    if not verify_printer(identify):
+        return redirect('/not_exist')
+    if identify == '' or model == '':
+        return redirect(f'/{identify}')
+    update_printer([identify, model, sector, date_purchased])
+    return redirect(f'/{identify}')
+
+
+@app.route('/<identify>', methods=['POST'])
+def delete_printer(identify):
+    global table_exist
+    table_exist = create_tables_db()
+    printer = verify_printer(identify)
+    if not printer:
+        return redirect('/not_exist')
+    delete_printer_db(identify)
+    return redirect('/')
 
 @app.route('/not_exist')
 def printer_not_exist():

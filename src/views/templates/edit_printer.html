@@ -1,0 +1,22 @@
+{% extends 'layout.html' %}
+
+{% block title %}
+Atualizar Impressora
+{% endblock %}
+
+{% block content %}
+<h3>Alterar dados da impressora {{printer[0]}}</h3>
+<form action="/update_printer" class="form edit-printer-form" method="post">
+    <input hidden value="{{printer[0]}}" name="identify">
+        <label>Modelo:
+            <input type="text" name="model" value="{{printer[1]}}">
+        </label>
+        <label>Setor:
+            <input type="text" name="sector" value="{{printer[2]}}">
+        </label>
+        <label>Data de compra:
+            <input type="date" name="date_purchased" value="{{printer[3]}}">
+        </label>
+    <button>Salvar</button>
+</form>
+{% endblock %}

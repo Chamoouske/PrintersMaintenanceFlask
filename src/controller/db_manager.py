@@ -55,6 +55,48 @@ def save_printer(printer) -> bool:
         return True
     except:
         return False
+    
+
+def update_printer(printer):
+    global engine
+    if engine == None:
+        create_engine()
+    try:
+        global printers
+        u = printers.update().where(printers.c.identify==printer[0]).values(model=printer[1],sector=printer[2],date_purchased=printer[3])
+        with engine.connect() as conn:
+            conn.execute(u)
+        return True
+    except:
+        return False
+    
+    
+def delete_printer_db(identify):
+    global engine
+    if engine == None:
+        create_engine()
+    try:
+        global printers
+        d = printers.delete().where(printers.c.identify==identify)
+        with engine.connect() as conn:
+            conn.execute(d)
+        return delete_all_maintenance(identify)
+    except:
+        return False
+    
+
+def delete_all_maintenance(identify):
+    global engine
+    if engine == None:
+        create_engine()
+    try:
+        global maintenances
+        s = maintenances.delete().where(maintenances.c.printer==identify)
+        with engine.connect() as conn:
+            conn.execute(s)
+        return True
+    except:
+        return False
 
 
 def save_maintenances(printer_maintenances, identify) -> bool:

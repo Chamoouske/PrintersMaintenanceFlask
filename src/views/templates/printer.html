@@ -4,7 +4,15 @@ Impressora {{ printer[0] }}
 {% endblock %}
 
 {% block content %}
-<h3>Impressora {{printer[0]}} <span class="material-icons">create</span></h3>
+<h3>Impressora {{printer[0]}}</h3>
+<form id="formPrinter">
+    <input hidden value="{{printer[0]}}" name="identify">
+    <input hidden value="{{printer[1]}}" name="model">
+    <input hidden value="{{printer[2]}}" name="sector">
+    <input hidden value="{{printer[3]}}" name="date_purchased">
+    <button onclick="return validMethod('delete')" title="Deletar {{printer[0]}}"><span class="material-icons">delete</span></button>
+    <button onclick="return validMethod('edit')" title="Editar {{printer[0]}}"><span class="material-icons">create</span></button>
+</form>
 <table class="table">
     <thead>Informações</thead>
     <tr>
@@ -63,15 +71,15 @@ Impressora {{ printer[0] }}
             {{ row[2] }}
         </td>
         <td>
-            <a href="/delete_maint/{{row}}"><span class="material-icons">delete</span></a>
-            <a href="/edit_maint/{{row}}"><span class="material-icons">create</span></a>
+            <a href="/delete_maint/{{row}}" title="Deletar manutenção"><span class="material-icons">delete</span></a>
+            <a href="/edit_maint/{{row}}" title="Editar manutenção"><span class="material-icons">create</span></a>
         </td>
     </tr>
     {% endfor %}
 </table>
 
 <h4>Adicionar Manutenção</h4>
-<form action="/edit_printer" class="form add-maint-form" method="post">
+<form action="/new_maint" class="form add-maint-form" method="post">
     <input hidden value="{{printer[0]}}" name="identify">
     <div>
         <label>Data:
@@ -84,4 +92,18 @@ Impressora {{ printer[0] }}
     <button>Adicionar</button>
 </form>
 
+<script>
+    function validMethod(typeButton){
+        const form = document.getElementById('formPrinter')
+        if(typeButton === 'delete'){
+            form.setAttribute('method', 'post')
+            form.setAttribute('action', '/{{printer[0]}}')
+        }
+        if(typeButton === 'edit'){
+            form.setAttribute('method', 'get')
+            form.setAttribute('action', '/edit_printer')
+        }
+        return true
+    }
+</script>
 {% endblock %}

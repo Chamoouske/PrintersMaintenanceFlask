@@ -38,12 +38,12 @@ h2 {
     margin: 0;
 }
 
-.create-printer, .maintenance {
+.create-printer, .maintenance, .edit-printer-form, .add-maint-form {
     display: flex;
     flex-direction: column;
 }
 
-.create-printer > label, .maintenance > label {
+.create-printer > label, .maintenance > label, .edit-printer-form > label, .add-maint-form > div {
     display: flex;
     justify-content: space-between;
     margin: 0.5rem;
@@ -57,17 +57,8 @@ h2 {
     width: 30%;
 }
 
-.add-maint-form{
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    flex-direction: column;
-}
-
 .add-maint-form > div {
-    display: flex;
-    align-items: center;
-    justify-content: center;
+    margin: 0px;
 }
 
 .form > button, .add-maint {
@@ -134,6 +125,10 @@ input, .add-maint {
 
 .show-printer{
     width: 10%;
+}
+
+#formPrinter{
+    margin: 0px;
 }
 
 table{

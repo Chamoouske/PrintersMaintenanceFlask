@@ -1,48 +1,67 @@
 {% extends 'layout.html' %}
 
 {% block title %}
-    Nova impressora
+Nova impressora
 {% endblock %}
 
 {% block content %}
-    <h3>Nova Impressora</h3>
-    {% if error %}
-        <div class="msg error">Erro ao Salvar</div>
-    {% endif %}
-    {% if saved %}
-        <div class="msg success">Sucesso ao Salvar</div>
-    {% endif %}
-    <form method="post" action="{{ url_for('new_printer') }}" class="form create-printer">
-        <label for="identify">
-            Identificador:
-            <input type="text" name="identify" required>
-        </label>
+<h3>Nova Impressora</h3>
+{% if error %}
+<div class="msg error">Erro ao Salvar</div>
+{% endif %}
+{% if saved %}
+<div class="msg success">Sucesso ao Salvar</div>
+{% endif %}
+<form method="post" action="{{ url_for('new_printer') }}" class="form create-printer">
+    <label for="identify">
+        Identificador:
+        <input type="text" name="identify" required>
+    </label>
 
-        <label for="model">
-            Modelo:
-            <input type="text" name="model" required>
-        </label>
-        
-        <label for="purchased_date">
-            Data da compra:
-            <input type="date" name="purchased_date">
-        </label>
+    <label for="model">
+        Modelo:
+        <input type="text" name="model" required>
+    </label>
 
-        <label for="sector">
-            Setor:
-            <input type="text" name="sector">
-        </label>
+    <label for="date_purchased">
+        Data da compra:
+        <input type="date" name="date_purchased">
+    </label>
 
-        <div class="maintenance">
-            <label for="date_maintenance">
-                Data da manutenção:
-                <input type="date" name="date_maintenance">
-            </label>
-            <label for="reason_maintenance">
-                Motivo da manutenção:
-                <input type="text" name="reason_maintenance">
-            </label>
-        </div>
-        <button type="submit">Salvar</button>
-    </form>
+    <label for="sector">
+        Setor:
+        <input type="text" name="sector">
+    </label>
+
+    <input type="number" name="count_maintenances" id="count_maintenances" hidden value="0">
+    <input type="button" value="Adicionar Manutenção" class="add-maint" onclick="add_maint_inputs()">
+    <div class="maint-inputs"></div>
+    
+    <button type="submit">Salvar</button>
+
+    <script>
+        let count_maintenances = 0
+        function add_maint_inputs() {
+            const div_maint_inputs = document.getElementsByClassName('maint-inputs')[0]
+            div_maint_inputs.innerHTML += ` <div class="maintenances" id="${count_maintenances}">
+                                                <span>Detalhes da manutenção:</span> 
+                                                <div>
+                                                    <label>Data:
+                                                        <input type="date" name="date_maint_${count_maintenances}" >
+                                                    </label>
+                                                    <label>Motivo
+                                                        <input type="text" name="reason_maint_${count_maintenances}" required>
+                                                    </label>
+                                                    <input type="button" value="X" class="rmv-maint" onclick="rmv_maint_inputs(${count_maintenances})">
+                                                </div>
+                                            </div>`
+            count_maintenances++
+            document.getElementById('count_maintenances').setAttribute('value', count_maintenances)
+        }
+
+        function rmv_maint_inputs(id){
+            document.getElementById(id).remove()
+        }
+    </script>
+</form>
 {% endblock %}

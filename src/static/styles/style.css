@@ -54,18 +54,56 @@ h2 {
     border-radius: 0.5rem;
     padding: 0.5rem;
     background-color: #0000001a;
+    width: 30%;
 }
 
-.form > button {
+.add-maint-form{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+}
+
+.add-maint-form > div {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.form > button, .add-maint {
     width: 30%;
     border-radius: 0.5rem;
     align-self: center;
     background-color: aliceblue;
 }
 
-input {
+input, .add-maint {
     border: 0.09rem solid #000;
     border-radius: 0.46rem;
+    text-align: center;
+}
+
+.add-maint{
+    width: 50%;
+}
+
+.rmv-maint {
+    background-color: #ff0000ab;
+}
+
+.maintenances{
+    display: grid;
+    grid-template-columns: 1fr;
+    align-self: center;
+    text-align: center;
+}
+
+.maint-inputs {
+    display: grid;
+    grid-template-columns: 1fr;
+    column-gap: 0.2rem;
+    row-gap: 0.4rem;
+    margin: 0.4rem 0px;
 }
 
 .msg {
@@ -84,11 +122,16 @@ input {
     background-color: #2bff00;
 }
 
+.show-printer{
+    width: 10%;
+}
+
 table{
     text-align: center;
     border: 0.1rem solid;
     border-collapse: collapse;
     padding: 0.1rem;
+    margin: 0.4rem;
 }
 
 td, th {
@@ -98,4 +141,8 @@ td, th {
 
 tr {
     border-bottom: 0.05rem solid;
+}
+
+label{
+    margin: 0.5rem;
 }

@@ -1,0 +1,80 @@
+{% extends "layout.html" %}
+{% block title %}
+Impressora {{ printer[0] }}
+{% endblock %}
+
+{% block content %}
+<h3>Impressora {{printer[0]}}</h3>
+<table class="table">
+    <thead>Informações</thead>
+    <tr>
+        <th>
+            Identificador
+        </th>
+        <th>
+            Modelo
+        </th>
+        <th>
+            Setor
+        </th>
+        <th>
+            Data de compra
+        </th>
+        <th>Qtd Manutenções</th>
+    </tr>
+    <tr>
+        <td>
+            {{ printer[0] }}
+        </td>
+        <td>
+            {{ printer[1] }}
+        </td>
+        <td>
+            {{ printer[2] }}
+        </td>
+        <td>
+            {{ printer[3] }}
+        </td>
+        <td>
+            {{ printer[4] }}
+        </td>
+    </tr>
+</table>
+
+<table class="table">
+    <thead>Manutenções</thead>
+    <tr>
+        <th>
+            Data
+        </th>
+        <th>
+            Motivo
+        </th>
+    </tr>
+    {% for row in maintenances %}
+    <tr>
+        <td>
+            {{ row[1] }}
+        </td>
+        <td>
+            {{ row[2] }}
+        </td>
+    </tr>
+    {% endfor %}
+</table>
+
+<h4>Adicionar Manutenção</h4>
+<form action="/edit_printer" class="form add-maint-form" method="post">
+    <input hidden value="{{printer[0]}}" name="identify">
+    <div>
+        <label>Data:
+            <input type="date" name="date_maint">
+        </label>
+        <label>Motivo:
+            <input type="text" name="reason_maint">
+        </label>
+    </div>
+    <button>Adicionar</button>
+</form>
+
+{% endblock %}

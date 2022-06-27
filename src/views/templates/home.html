@@ -22,22 +22,32 @@ Home
         </th>
         <th>Qtd Manutenções</th>
     </tr>
-    {% for i in range(length) %}
+    {% for row in printers %}
     <tr>
         <td>
-            {{ printers['identify'][i] }}
+            <a href="/{{ row[0] }}">
+                {{ row[0] }}
+            </a>
         </td>
         <td>
-            {{ printers['model'][i] }}
+            <a href="/{{ row[0] }}">
+                {{ row[1] }}
+            </a>
         </td>
         <td>
-            {{ printers['sector'][i] }}
+            <a href="/{{ row[0] }}">
+                {{ row[2] }}
+            </a>
         </td>
         <td>
-            {{ printers['date_purchased'][i] }}
+            <a href="/{{ row[0] }}">
+                {{ row[3] }}
+            </a>
         </td>
         <td>
-            {{ printers['maintenances'][i] }}
+            <a href="/{{ row[0] }}">
+                {{ row[4] }}
+            </a>
         </td>
     </tr>
     {% endfor %}

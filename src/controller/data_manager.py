@@ -1,45 +1,18 @@
-import sqlalchemy
-import pandas
-
-engine = None
-def create_engine() -> None:
-    global engine
-    engine = sqlalchemy.create_engine('sqlite:///src\\static\\db\\database.db')
-    pass
-
-def create_tables_db() -> bool:
-    global engine
-    if engine == None:
-        create_engine()
-    try:
-        engine.execute("""
-                   CREATE TABLE IF NOT EXISTS printers (
-                       identify TEXT PRIMARY KEY NOT NULL,
-                       model TEXT NOT NULL,
-                       sector TEXT,
-                       date_purchased TEXT
-                   )
-                   """)
-        engine.execute("""
-                   CREATE TABLE IF NOT EXISTS maintenances (
-                       printer TEXT,
-                       date_maintenance TEXT NOT NULL,
-                       reason TEXT NOT NULL
-                   )
-                   """)
-        return True
-    except Exception:
-        return False
+import pandas as pd
 
 
-def verify_tables() -> bool:
-    global engine
-    if engine == None:
-        create_engine()
-    try:
-        engine.execute("""
-                       SELECT * FROM printers
-                       """)
-        return True
-    except:
-        return False
+def get_values_printer_class(printer_class):
+    printer = printer_class.__dict__
+    identify = printer['identify']
+    model = printer['model']
+    sector = printer['sector']
+    date_purchased = printer['date_purchased']
+    return identify, model, sector, date_purchased
+
+
+def convert_tables_in_df(engine):
+    printers = pd.read_sql_table('printers', engine)
+    maintenances = pd.read_sql_table('maintenances', engine)
+    printers['maintenances'] = maintenances['printer'].count()
+    
+    return printers

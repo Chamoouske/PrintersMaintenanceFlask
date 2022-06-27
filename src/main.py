@@ -3,7 +3,8 @@ from pathlib import Path
 
 from flask import Flask, request, redirect
 
-from controller.data_manager import create_tables_db, verify_tables
+from controller.validate_fields import validate_fields
+from controller.db_manager import *
 from views.pages import *
 
 file = Path(__file__).resolve()
@@ -17,40 +18,85 @@ app = Flask(__name__,
         template_folder='views/templates'
     )
 
-error = False
+table_exist = False
+printers = []
 @app.route('/')
 def home():
-    global error
-    error = verify_tables()
-    return homepage(table_ok=error)
+    global table_exist
+    global printers
+    table_exist = create_tables_db()
+    if table_exist:
+        printers = get_printers()
+    return homepage(table_ok=table_exist, printers=printers)
 
 @app.route('/create_tables')
 def create_tables():
-    global error
-    error = create_tables_db()
+    global table_exist
+    table_exist = create_tables_db()
     return redirect('/')
 
 @app.route('/cadastro')
 def create_new_printer():
-    global error
-    return create_printer(table_ok=error)
+    global table_exist
+    table_exist = create_tables_db()
+    return create_printer(table_ok=table_exist)
 
 @app.route('/new_printer', methods=['POST'])
 def new_printer():
+    global table_exist
+    table_exist = create_tables_db()
     identify = request.form['identify']
     model = request.form['model']
     sector = request.form['sector']
-    purchased_date = request.form['purchased_date']
-    date_maintenance = request.form['date_maintenance']
-    reason_maintenance = request.form['reason_maintenance']
+    date_purchased = request.form['date_purchased']
+    count_maintenances = request.form['count_maintenances']
+    dates_maintenances = []
+    reasons = []
     if identify == '' or model == '':
-        return create_printer(error=True)
-    return create_printer(saved=True)
+        return create_printer(error=True,table_ok=table_exist)
+    for i in range(int(count_maintenances)):
+        try:
+            dates_maintenances.append(request.form[f'date_maint_{i}'])
+            reasons.append(request.form[f'reason_maint_{i}'])
+            if reasons[-1] == '':
+                reasons.pop()
+                dates_maintenances.pop()
+        except:
+            pass
+    saved = validate_fields(identify,model, date_purchased, sector, dates_maintenances, reasons)
+    if saved:
+        return create_printer(saved=True,table_ok=table_exist)
+    else:
+        return create_printer(error=True,table_ok=table_exist)
 
 @app.route('/sobre')
 def about_app():
-    global error
-    return page_about(table_ok=error)
+    global table_exist
+    table_exist = create_tables_db()
+    return page_about(table_ok=table_exist)
+
+@app.route('/<identify>')
+def details_printer(identify):
+    global table_exist
+    table_exist = create_tables_db()
+    printer = verify_printer(identify)
+    if not printer:
+        return redirect('/not_exist')
+    maintenances = get_maintenances(identify)
+    return show_printer_info(printer=printer, maintenances=maintenances, table_ok=table_exist)
+
+@app.route('/edit_printer', methods=['POST'])
+def update_maintenances_printer():
+    identify = request.form['identify']
+    date_maint = request.form['date_maint']
+    reason_maint = request.form['reason_maint']
+    if reason_maint == '' or date_maint == '':
+        return redirect(f'/{identify}')
+    return redirect(f'/{identify}')
+
+@app.route('/not_exist')
+def printer_not_exist():
+    return "Não existe mané"
 
 if __name__ == '__main__':
-    app.run(debug=True, use_reloader=True)
+    app.run(debug=True)

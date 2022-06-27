@@ -113,7 +113,8 @@ def save_maintenances(printer_maintenances, identify) -> bool:
                                             )
             with engine.connect() as conn:
                 conn.execute(stmt)
-        return update_count_maint(identify=identify, operation='add')
+            update_count_maint(identify=identify, operation='add')
+        return True
     except:
         return False
     

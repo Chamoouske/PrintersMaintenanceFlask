@@ -125,8 +125,8 @@ def delete_maintenance(maintenance):
         create_engine()
     try:
         global maintenances
-        s = maintenances.delete().where(maintenances.c.printer==maintenance[0],
-                                        maintenances.c.date_maintenance==maintenance[1],
+        s = maintenances.delete().where(maintenances.c.printer==maintenance[0]).where(
+                                        maintenances.c.date_maintenance==maintenance[1]).where(
                                         maintenances.c.reason==maintenance[2])
         with engine.connect() as conn:
             conn.execute(s)

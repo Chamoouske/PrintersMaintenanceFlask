@@ -47,7 +47,7 @@ def save_printer(printer) -> bool:
                                         model=printer.model,
                                         sector=printer.sector,
                                         date_purchased=printer.date_purchased,
-                                        count_maintenances=printer.count_maintenances)
+                                        count_maintenances=0)
         with engine.connect() as conn:
             conn.execute(stmt)
         if printer.count_maintenances > 0:
@@ -71,17 +71,39 @@ def save_maintenances(printer_maintenances, identify) -> bool:
                                             )
             with engine.connect() as conn:
                 conn.execute(stmt)
-        return update_count_maint(identify=identify)
+        return update_count_maint(identify=identify, operation='add')
+    except:
+        return False
+    
+    
+def delete_maintenance(maintenance):
+    global engine
+    if engine == None:
+        create_engine()
+    try:
+        global maintenances
+        s = maintenances.delete().where(maintenances.c.printer==maintenance[0],
+                                        maintenances.c.date_maintenance==maintenance[1],
+                                        maintenances.c.reason==maintenance[2])
+        with engine.connect() as conn:
+            conn.execute(s)
+        return update_count_maint(maintenance[0], 'sub')
     except:
         return False
     
 
-def update_count_maint(identify):
+def update_count_maint(identify, operation='add'):
+    global engine
+    if engine == None:
+        create_engine()
     try:
         printer = get_printers(identify)
         for row in printer:
-            new_value = row[4]
-        s = printers.update().where(printers.c.identify == identify).values(count_maintenances = new_value+1)
+            if operation == 'add':
+                new_value = row[4] + 1
+            else:
+                new_value = row[4] - 1
+        s = printers.update().where(printers.c.identify == identify).values(count_maintenances = new_value)
         with engine.connect() as conn:
             conn.execute(s)
         return True

@@ -89,6 +89,8 @@ input, .add-maint {
 
 .rmv-maint {
     background-color: #ff0000ab;
+    width: 1.5rem;
+    height: 1.5rem;
 }
 
 .maintenances{
@@ -96,6 +98,14 @@ input, .add-maint {
     grid-template-columns: 1fr;
     align-self: center;
     text-align: center;
+}
+
+.maintenances > div{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    align-content: center;
+    justify-items: center;
 }
 
 .maint-inputs {

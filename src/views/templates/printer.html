@@ -50,6 +50,9 @@ Impressora {{ printer[0] }}
         <th>
             Motivo
         </th>
+        <th>
+            Ações
+        </th>
     </tr>
     {% for row in maintenances %}
     <tr>
@@ -58,6 +61,9 @@ Impressora {{ printer[0] }}
         </td>
         <td>
             {{ row[2] }}
+        </td>
+        <td>
+            <a href="/delete_maint/{{row}}">X</a>
         </td>
     </tr>
     {% endfor %}

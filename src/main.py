@@ -94,9 +94,18 @@ def add_maintenances_printer():
         save_maintenances([[date_maint, reason_maint]], identify)
     return redirect(f'/{identify}')
 
+@app.route('/delete_maint/<maint>')
+def delete_maint(maint):
+    maint = maint.replace("\'", "").replace('(', '').replace(')', '').replace(' ', '').split(',')
+    if delete_maintenance(maint):
+        return redirect(f'/{maint[0]}')
+    return redirect('/')
+
 @app.route('/not_exist')
 def printer_not_exist():
-    return "Não existe mané"
+    global table_exist
+    table_exist = create_tables_db()
+    return page_not_exist(table_ok=table_exist)
 
 if __name__ == '__main__':
     app.run(debug=True)

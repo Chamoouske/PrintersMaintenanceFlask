@@ -86,12 +86,12 @@ def details_printer(identify):
     return show_printer_info(printer=printer, maintenances=maintenances, table_ok=table_exist)
 
 @app.route('/edit_printer', methods=['POST'])
-def update_maintenances_printer():
+def add_maintenances_printer():
     identify = request.form['identify']
     date_maint = request.form['date_maint']
     reason_maint = request.form['reason_maint']
-    if reason_maint == '' or date_maint == '':
-        return redirect(f'/{identify}')
+    if reason_maint != '':
+        save_maintenances([[date_maint, reason_maint]], identify)
     return redirect(f'/{identify}')
 
 @app.route('/not_exist')

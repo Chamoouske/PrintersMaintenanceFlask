@@ -1,5 +1,5 @@
-from controller.db_manager import save_printer
-from models.printer import Printer
+from src.controller.db_manager import save_printer
+from src.models.printer import Printer
 
 
 def validate_fields(model, date_purchased = '', sector = '', dates_maint=[], reasons_maint=[]) -> bool:

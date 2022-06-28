@@ -3,9 +3,9 @@ from pathlib import Path
 
 from flask import Flask, request, redirect
 
-from controller.validate_fields import validate_fields
-from controller.db_manager import *
-from views.pages import *
+from src.controller.validate_fields import validate_fields
+from src.controller.db_manager import *
+from src.views.pages import *
 
 file = Path(__file__).resolve()
 sys.path.append('.')
@@ -174,6 +174,3 @@ def printer_not_exist():
     global table_exist
     table_exist = create_tables_db()
     return page_not_exist(table_ok=table_exist)
-
-if __name__ == '__main__':
-    app.run(debug=True)

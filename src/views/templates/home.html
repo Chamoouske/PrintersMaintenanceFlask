@@ -9,9 +9,6 @@ Home
 <table class="table">
     <tr>
         <th>
-            Identificador
-        </th>
-        <th>
             Modelo
         </th>
         <th>
@@ -24,11 +21,6 @@ Home
     </tr>
     {% for row in printers %}
     <tr>
-        <td>
-            <a href="/{{ row[0] }}">
-                {{ row[0] }}
-            </a>
-        </td>
         <td>
             <a href="/{{ row[0] }}">
                 {{ row[1] }}

@@ -6,7 +6,7 @@ Impressora {{ printer[0] }}
 {% block content %}
 <h3>Impressora {{printer[0]}}</h3>
 <form id="formPrinter">
-    <input hidden value="{{printer[0]}}" name="identify">
+    <input hidden value="{{printer[0]}}" name="id_printer">
     <input hidden value="{{printer[1]}}" name="model">
     <input hidden value="{{printer[2]}}" name="sector">
     <input hidden value="{{printer[3]}}" name="date_purchased">
@@ -17,9 +17,6 @@ Impressora {{ printer[0] }}
     <thead>Informações</thead>
     <tr>
         <th>
-            Identificador
-        </th>
-        <th>
             Modelo
         </th>
         <th>
@@ -28,12 +25,11 @@ Impressora {{ printer[0] }}
         <th>
             Data de compra
         </th>
-        <th>Qtd Manutenções</th>
+        <th>
+            Qtd Manutenções
+        </th>
     </tr>
     <tr>
-        <td>
-            {{ printer[0] }}
-        </td>
         <td>
             {{ printer[1] }}
         </td>
@@ -65,16 +61,17 @@ Impressora {{ printer[0] }}
     {% for row in maintenances %}
     <tr>
         <td>
-            {{ row[1] }}
-        </td>
-        <td>
             {{ row[2] }}
         </td>
         <td>
+            {{ row[3] }}
+        </td>
+        <td>
             <form id="formMaint">
-                <input type="hidden" name="identify" value="{{row[0]}}">
-                <input type="hidden" name="date_maintenance" value="{{row[1]}}">
-                <input type="hidden" name="reason" value="{{row[2]}}">
+                <input type="hidden" name="id_maint" value="{{row[0]}}">
+                <input type="hidden" name="id_printer" value="{{row[1]}}">
+                <input type="hidden" name="date_maintenance" value="{{row[2]}}">
+                <input type="hidden" name="reason" value="{{row[3]}}">
                 <button onclick="return validMethodFormMaint('delete')" title="Deletar manutenção"><span class="material-icons">delete</span></button>
                 <button onclick="return validMethodFormMaint('edit')" title="Editar manutenção"><span class="material-icons">create</span></button>
             </form>
@@ -85,7 +82,7 @@ Impressora {{ printer[0] }}
 
 <h4>Adicionar Manutenção</h4>
 <form action="/new_maint" class="form add-maint-form" method="post">
-    <input hidden value="{{printer[0]}}" name="identify">
+    <input hidden value="{{printer[0]}}" name="id_printer">
     <div>
         <label>Data:
             <input type="date" name="date_maint">

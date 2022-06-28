@@ -5,9 +5,9 @@ Atualizar Impressora
 {% endblock %}
 
 {% block content %}
-<h3>Alterar dados da impressora {{printer[0]}}</h3>
+<h3>Alterar dados da impressora {{printer[1]}}</h3>
 <form action="/update_printer" class="form edit-printer-form" method="post">
-    <input hidden value="{{printer[0]}}" name="identify">
+    <input hidden value="{{printer[0]}}" name="id_printer">
         <label>Modelo:
             <input type="text" name="model" value="{{printer[1]}}">
         </label>

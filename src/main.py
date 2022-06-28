@@ -45,14 +45,13 @@ def create_new_printer():
 def new_printer():
     global table_exist
     table_exist = create_tables_db()
-    identify = request.form['identify']
     model = request.form['model']
     sector = request.form['sector']
     date_purchased = request.form['date_purchased']
     count_maintenances = request.form['count_maintenances']
     dates_maintenances = []
     reasons = []
-    if identify == '' or model == '':
+    if model == '':
         return create_printer(error=True,table_ok=table_exist)
     for i in range(int(count_maintenances)):
         try:
@@ -63,7 +62,7 @@ def new_printer():
                 dates_maintenances.pop()
         except:
             pass
-    saved = validate_fields(identify,model, date_purchased, sector, dates_maintenances, reasons)
+    saved = validate_fields(model, date_purchased, sector, dates_maintenances, reasons)
     if saved:
         return create_printer(saved=True,table_ok=table_exist)
     else:
@@ -75,87 +74,99 @@ def about_app():
     table_exist = create_tables_db()
     return page_about(table_ok=table_exist)
 
-@app.route('/<identify>')
-def details_printer(identify):
+@app.route('/<id_printer>')
+def details_printer(id_printer):
     global table_exist
     table_exist = create_tables_db()
-    printer = verify_printer(identify)
+    id_printer = int(id_printer)
+    printer = verify_printer(id_printer)
     if not printer:
         return redirect('/not_exist')
-    maintenances = get_maintenances(identify)
+    maintenances = get_maintenances(id_printer)
     return show_printer_info(printer=printer, maintenances=maintenances, table_ok=table_exist)
 
 @app.route('/new_maint', methods=['POST'])
 def add_maintenances_printer():
-    identify = request.form['identify']
+    id_printer = request.form['id_printer']
+    id_printer = int(id_printer)
     date_maint = request.form['date_maint']
     reason_maint = request.form['reason_maint']
     if reason_maint != '':
-        save_maintenances([[date_maint, reason_maint]], identify)
-    return redirect(f'/{identify}')
+        save_maintenances([[date_maint, reason_maint]], id_printer)
+    return redirect(f'/{id_printer}')
 
 @app.route('/delete_maint', methods=['POST'])
 def delete_maint():
-    identify = request.form['identify']
-    date_maint = request.form['date_maintenance']
-    reason = request.form['reason']
-    if delete_maintenance([identify, date_maint, reason]):
-        return redirect(f'/{identify}')
+    id_maint = request.form['id_maint']
+    id_printer = request.form['id_printer']
+    id_maint = int(id_maint)
+    id_printer = int(id_printer)
+    if delete_maintenance(id_maint,id_printer):
+        return redirect(f'/{id_printer}')
     return redirect('/')
 
 @app.route('/edit_maint', methods=['GET'])
 def edite_maint():
     global table_exist
     table_exist = create_tables_db()
-    identify = request.args['identify']
+    id_maint = request.args['id_maint']
+    id_printer = request.args['id_printer']
+    id_maint = int(id_maint)
+    id_printer = int(id_printer)
     date_maint = request.args['date_maintenance']
     reason = request.args['reason']
-    return edit_maintenance([identify, date_maint, reason], table_ok=table_exist)
+    return edit_maintenance([id_maint, id_printer, date_maint, reason], table_ok=table_exist)
 
 @app.route('/update_maint', methods=['POST'])
 def update_maintenance():
-    identify = request.form['identify']
+    id_printer = request.form['id_printer']
+    id_maint = request.form['id_maint']
+    id_maint = int(id_maint)
+    id_printer = int(id_printer)
     date_maint = request.form['date_maint']
     reason_maint = request.form['reason_maint']
-    last_date_maint = request.form['last_date_maint']
-    last_reason_maint = request.form['last_reason_maint']
     if reason_maint != '':
-        update_maintenances([identify, date_maint, reason_maint], [identify, last_date_maint, last_reason_maint])
-    return redirect(f'/{identify}')
+        update_maintenances([id_maint, date_maint, reason_maint])
+    return redirect(f'/{id_printer}')
 
 @app.route('/edit_printer', methods=['GET'])
 def edit_printer():
     global table_exist
     table_exist = create_tables_db()
-    identify = request.args["identify"]
+    id_printer = request.args["id_printer"]
+    id_printer = int(id_printer)
     model = request.args["model"]
     sector = request.args["sector"]
     date_purchased = request.args["date_purchased"]
-    return edit_printer_page([identify, model, sector, date_purchased], table_ok=table_exist)
+    return edit_printer_page([id_printer, model, sector, date_purchased], table_ok=table_exist)
 
 @app.route('/update_printer', methods=['POST'])
 def update_printer_page():
-    identify = request.form['identify']
+    global table_exist
+    table_exist = create_tables_db()
+    id_printer = request.form['id_printer']
+    id_printer = int(id_printer)
     model = request.form['model']
     sector = request.form['sector']
     date_purchased = request.form['date_purchased']
-    if not verify_printer(identify):
+    if not verify_printer(id_printer):
         return redirect('/not_exist')
-    if identify == '' or model == '':
-        return redirect(f'/{identify}')
-    update_printer([identify, model, sector, date_purchased])
-    return redirect(f'/{identify}')
+    if model == '':
+        return redirect(f'/{id_printer}')
+    update_printer([id_printer, model, sector, date_purchased])
+    return redirect(f'/{id_printer}')
 
 
-@app.route('/<identify>', methods=['POST'])
-def delete_printer(identify):
+@app.route('/<id_printer>', methods=['POST'])
+def delete_printer(id_printer):
     global table_exist
     table_exist = create_tables_db()
-    identify = request.form['identify']
-    printer = verify_printer(identify)
+    id_printer = request.form['id_printer']
+    id_printer = int(id_printer)
+    printer = verify_printer(id_printer)
     if not printer:
         return redirect('/not_exist')
-    delete_printer_db(identify)
+    delete_printer_db(id_printer)
     return redirect('/')
 
 @app.route('/not_exist')

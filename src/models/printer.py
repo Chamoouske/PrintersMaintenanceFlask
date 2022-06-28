@@ -1,6 +1,5 @@
 class Printer:
-    def __init__(self, identify, model, purchased='', sector='', count_maintenances=0) -> None:
-        self.identify = identify
+    def __init__(self, model, purchased='', sector='', count_maintenances=0) -> None:
         self.model = model
         self.sector = sector
         self.maintenances = []

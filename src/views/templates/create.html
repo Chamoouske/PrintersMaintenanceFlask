@@ -13,11 +13,6 @@ Nova impressora
 <div class="msg success">Sucesso ao Salvar</div>
 {% endif %}
 <form method="post" action="{{ url_for('new_printer') }}" class="form create-printer">
-    <label for="identify">
-        Identificador:
-        <input type="text" name="identify" required>
-    </label>
-
     <label for="model">
         Modelo:
         <input type="text" name="model" required>

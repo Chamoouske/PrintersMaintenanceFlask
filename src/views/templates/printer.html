@@ -10,8 +10,8 @@ Impressora {{ printer[0] }}
     <input hidden value="{{printer[1]}}" name="model">
     <input hidden value="{{printer[2]}}" name="sector">
     <input hidden value="{{printer[3]}}" name="date_purchased">
-    <button onclick="return validMethod('delete')" title="Deletar {{printer[0]}}"><span class="material-icons">delete</span></button>
-    <button onclick="return validMethod('edit')" title="Editar {{printer[0]}}"><span class="material-icons">create</span></button>
+    <button onclick="return validMethodFormPrinter('delete')" title="Deletar {{printer[0]}}"><span class="material-icons">delete</span></button>
+    <button onclick="return validMethodFormPrinter('edit')" title="Editar {{printer[0]}}"><span class="material-icons">create</span></button>
 </form>
 <table class="table">
     <thead>Informações</thead>
@@ -71,8 +71,13 @@ Impressora {{ printer[0] }}
             {{ row[2] }}
         </td>
         <td>
-            <a href="/delete_maint/{{row}}" title="Deletar manutenção"><span class="material-icons">delete</span></a>
-            <a href="/edit_maint/{{row}}" title="Editar manutenção"><span class="material-icons">create</span></a>
+            <form id="formMaint">
+                <input type="hidden" name="identify" value="{{row[0]}}">
+                <input type="hidden" name="date_maintenance" value="{{row[1]}}">
+                <input type="hidden" name="reason" value="{{row[2]}}">
+                <button onclick="return validMethodFormMaint('delete')" title="Deletar manutenção"><span class="material-icons">delete</span></button>
+                <button onclick="return validMethodFormMaint('edit')" title="Editar manutenção"><span class="material-icons">create</span></button>
+            </form>
         </td>
     </tr>
     {% endfor %}
@@ -93,7 +98,7 @@ Impressora {{ printer[0] }}
 </form>
 
 <script>
-    function validMethod(typeButton){
+    function validMethodFormPrinter(typeButton){
         const form = document.getElementById('formPrinter')
         if(typeButton === 'delete'){
             form.setAttribute('method', 'post')
@@ -102,6 +107,19 @@ Impressora {{ printer[0] }}
         if(typeButton === 'edit'){
             form.setAttribute('method', 'get')
             form.setAttribute('action', '/edit_printer')
+        }
+        return true
+    }
+
+    function validMethodFormMaint(typeButton){
+        const form = document.getElementById('formMaint')
+        if(typeButton === 'delete'){
+            form.setAttribute('method', 'post')
+            form.setAttribute('action', '/delete_maint')
+        }
+        if(typeButton === 'edit'){
+            form.setAttribute('method', 'get')
+            form.setAttribute('action', '/edit_maint')
         }
         return true
     }

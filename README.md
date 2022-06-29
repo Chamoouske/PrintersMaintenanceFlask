@@ -11,13 +11,12 @@
 [![made-with-python](https://img.shields.io/badge/Made%20with-Python-1f425f.svg)](https://www.python.org/)
 </div>
 
-- [Projeto para controle de manutenção de impressoras](#-projeto-para-controle-de-manutenção-de-impressoras)
-- [Features](#-features)
-- [Demonstração da aplicação](#-demonstração-da-aplicação)
-- [Pré-requisitos](#-pré-requisitos)
-- [Rodando a aplicação](#-rodando-a-aplicação)
-- [Tecnologias](#-tecnologias)
-- [Autor](#-autor)
+- [Features](#features)
+- [Demonstração da aplicação](#demonstração-da-aplicação)
+- [Pré-requisitos](#pré-requisitos)
+- [Rodando a aplicação](#rodando-a-aplicação)
+- [Tecnologias](#tecnologias)
+- [Autor](#autor)
 
 <div align="center">
 
@@ -92,3 +91,8 @@ Feito com ❤️ por Ajax Lima
 [![Twitter Badge](https://img.shields.io/badge/-@chamoouske-1ca0f1?style=flat-square&labelColor=1ca0f1&logo=twitter&logoColor=white&link=https://twitter.com/chamoouske)](https://twitter.com/chamoouske)
 [![Linkedin Badge](https://img.shields.io/badge/-Ajax%20Lima-blue?style=flat-square&logo=Linkedin&logoColor=white&link=https://www.linkedin.com/in/ajaxlima/)](https://www.linkedin.com/in/ajaxlima/)
 [![Gmail Badge](https://img.shields.io/badge/-ajaxlima94@gmail.com-c14438?style=flat-square&logo=Gmail&logoColor=white&link=mailto:ajaxlima94@gmail.com)](mailto:ajaxlima94@gmail.com)
+
+<div align="center">
+
+![Licence](https://img.shields.io/github/license/Chamoouske/PrintersMaintenanceFlask)
+</div>
